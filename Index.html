@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <h2>Material Weight Calculator</h2>
+    <form id="weightForm">
+      <label for="materialType">Material Type (e.g., Steel, Aluminum, Brass):</label>
+      <input type="text" id="materialType" name="materialType" required><br><br>
+      
+      <label for="dimension">Dimension (Side length in mm for square rod):</label>
+      <input type="number" id="dimension" name="dimension" required><br><br>
+      
+      <label for="length">Length (mm):</label>
+      <input type="number" id="length" name="length" required><br><br>
+      
+      <input type="button" value="Calculate and Submit" onclick="submitData()">
+    </form>
+    
+    <div id="result"></div>
+
+    <script>
+      function submitData() {
+        var materialType = document.getElementById('materialType').value;
+        var dimension = document.getElementById('dimension').value;
+        var length = document.getElementById('length').value;
+
+        // Ensure inputs are valid
+        if (materialType && dimension && length) {
+          google.script.run.withSuccessHandler(function(response) {
+            document.getElementById('result').innerHTML = response;
+          }).submitForm(materialType, dimension, length);
+        } else {
+          document.getElementById('result').innerHTML = "Please fill in all the fields.";
+        }
+      }
+    </script>
+  </body>
+</html>
